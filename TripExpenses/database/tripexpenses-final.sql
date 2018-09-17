@@ -23,6 +23,16 @@ CREATE TABLE bills (
 
 ALTER TABLE bills ADD CONSTRAINT bills_pk PRIMARY KEY ( billid );
 
+CREATE TABLE locations (
+    locid               INTEGER NOT NULL,
+    locname             VARCHAR2(40),
+    loccountry          VARCHAR2(40),
+    locdailyallowance   INTEGER,
+    locdistance         INTEGER
+);
+
+ALTER TABLE locations ADD CONSTRAINT locations_pk PRIMARY KEY ( locid );
+
 CREATE TABLE businesstrips (
     bustripid              INTEGER NOT NULL,
     fromdate               DATE,
@@ -46,19 +56,11 @@ CREATE TABLE employees (
 
 ALTER TABLE employees ADD CONSTRAINT employees_pk PRIMARY KEY ( employeeid );
 
-CREATE TABLE locations (
-    locid               INTEGER NOT NULL,
-    locname             VARCHAR2(40),
-    loccountry          VARCHAR2(40),
-    locdailyallowance   INTEGER,
-    locdistance         INTEGER
-);
-
-ALTER TABLE locations ADD CONSTRAINT locations_pk PRIMARY KEY ( locid );
-
 CREATE TABLE tripbills (
     tripbillid                INTEGER NOT NULL,
     totalamount               NUMBER,
+    totalalowance             NUMBER, 
+    summary                   NUMBER,
     businesstrips_bustripid   INTEGER NOT NULL
 );
 
@@ -88,24 +90,75 @@ ALTER TABLE users ADD CONSTRAINT users_username_un UNIQUE ( username );
 
 ALTER TABLE bills
     ADD CONSTRAINT bills_businesstrips_fk FOREIGN KEY ( businesstrips_bustripid )
-        REFERENCES businesstrips ( bustripid );
-
-ALTER TABLE businesstrips
-    ADD CONSTRAINT businesstrips_employees_fk FOREIGN KEY ( employees_employeeid )
-        REFERENCES employees ( employeeid );
+        REFERENCES businesstrips ( bustripid ) ON DELETE CASCADE;
 
 ALTER TABLE businesstrips
     ADD CONSTRAINT businesstrips_locations_fk FOREIGN KEY ( locations_locid )
-        REFERENCES locations ( locid );
+        REFERENCES locations ( locid ) ON DELETE CASCADE;
 
 ALTER TABLE tripbills
     ADD CONSTRAINT tripbills_businesstrips_fk FOREIGN KEY ( businesstrips_bustripid )
-        REFERENCES businesstrips ( bustripid );
+        REFERENCES businesstrips ( bustripid ) ON DELETE CASCADE;
 
 ALTER TABLE users
     ADD CONSTRAINT users_employees_fk FOREIGN KEY ( employees_employeeid )
         REFERENCES employees ( employeeid );
 
+CREATE SEQUENCE authorities_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+ 
+  CREATE SEQUENCE locations_seq
+ minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+ 
+ CREATE SEQUENCE employees_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+ 
+  CREATE SEQUENCE businesstrips_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+
+CREATE SEQUENCE tripbills_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+
+CREATE SEQUENCE bill_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
+ 
+ CREATE SEQUENCE user_seq
+  minvalue 1
+  maxvalue 100000
+ START WITH     1
+ INCREMENT BY   1
+nocache
+ NOCYCLE;
 
 
 -- Oracle SQL Developer Data Modeler Summary Report: 
