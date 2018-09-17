@@ -28,9 +28,9 @@ public class User implements Serializable {
 	private String username;
 
 
-	@ManyToOne
-	@JoinColumn(name="EMPLOYEES_EMPLOYEEID")
-	private Employee employeeid;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employees_employeeid")
+	private Employee employee;
 	
 	public User() {
 	}
@@ -67,14 +67,12 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-
-
 	public Employee getEmployee() {
-		return this.employeeid;
+		return employee;
 	}
 
-	public void setEmployee(Employee employeeid) {
-		this.employeeid = employeeid;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	@Override

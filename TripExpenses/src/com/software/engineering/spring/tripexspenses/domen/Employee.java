@@ -1,9 +1,21 @@
 package com.software.engineering.spring.tripexspenses.domen;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 /**
@@ -34,12 +46,13 @@ public class Employee implements Serializable {
 	private BigDecimal persidnum;
 
 	//bi-directional many-to-one association to Businesstrip
-	@OneToMany(mappedBy="employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="employee", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Businesstrip> businesstrips;
 
 	//bi-directional many-to-one association to User
-	@OneToMany(mappedBy="employeeid")
-	private List<User> users;
+	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, 
+            fetch = FetchType.EAGER, optional = true)
+	private User user;
 
 	public Employee() {
 	}
@@ -114,32 +127,17 @@ public class Employee implements Serializable {
 		return businesstrip;
 	}
 
-	public List<User> getUsers() {
-		return this.users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
 		return fullname;
 	}
-
-//	public User addUser(User user) {
-//		getUsers().add(user);
-//		user.setEmployee(this);
-//
-//		return user;
-//	}
-//
-//	public User removeUser(User user) {
-//		getUsers().remove(user);
-//		user.setEmployee(null);
-//
-//		return user;
-//	}
-
 
 }

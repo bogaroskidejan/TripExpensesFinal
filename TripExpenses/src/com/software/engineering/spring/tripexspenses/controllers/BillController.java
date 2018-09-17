@@ -128,8 +128,9 @@ public class BillController {
 	}
 	
 	@RequestMapping(value = "/deletebill")
-	public String delete(Model model, Long billId) {
-		billService.delete(billId);
+	public String delete(Model model, Long billid) {
+		System.out.println(billid);
+		billService.delete(billid);
 		List<Bill> bills = billService.findAll();
 		model.addAttribute("bills", bills);
 		return "bills";

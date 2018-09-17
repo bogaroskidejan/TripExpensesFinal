@@ -29,7 +29,7 @@ public class Bill implements Serializable {
 	private BigDecimal price;
 
 	//bi-directional many-to-one association to Businesstrip
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="BUSINESSTRIPS_BUSTRIPID")
 	private Businesstrip businesstrip;
 
