@@ -17,7 +17,8 @@
                         <th>Country</th> 
                         <th>Daily allowance</th>  
                           <th>Location distance</th>
-                        <th>delete</th>                  
+                        <th>action</th>   
+                        <th>action</th>                 
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,8 @@
                             <td>${location.locdailyallowance}</td>  
                             <td>${location.locdistance}</td>  
                             <td><a onclick="if(!(confirm('Are u sure u want to delete? '))) return false" href="${pageContext.request.contextPath}/deletelocation?locid=${location.locid}">Delete</a>
+                            </td>
+                            <td><a  href="${pageContext.request.contextPath}/updatelocation?locid=${location.locid}">Update</a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -130,7 +130,14 @@ public class BillController {
 	@RequestMapping(value = "/deletebill")
 	public String delete(Model model, Long billid) {
 		System.out.println(billid);
-		billService.delete(billid);
+		Bill bill = billService.findByID(billid);
+		BigDecimal bprice = bill.getPrice();
+		Tripbill tbill = tripBillService.findByID(bill.getBusinesstrip().getTripbills().getTripbillid());
+		BigDecimal amount = tbill.getTotalamount();
+		amount = amount.subtract(bprice); 
+		tbill.setTotalamount(amount);
+		tripBillService.save(tbill);
+ 		billService.delete(billid);
 		List<Bill> bills = billService.findAll();
 		model.addAttribute("bills", bills);
 		return "bills";

@@ -27,6 +27,8 @@
 		<security:intercept-url pattern="/addlocation" access="hasAuthority('admin')" />
 		<security:intercept-url pattern="/docreatelocation" access="hasAuthority('admin')" />
 		<security:intercept-url pattern="/deletelocation" access="hasAuthority('admin')" />
+		<security:intercept-url pattern="/updatelocation" access="hasAuthority('admin')" />
+		<security:intercept-url pattern="/doupdatelocation" access="hasAuthority('admin')" />
 		
 		<security:intercept-url pattern="/tripbills" access="isAuthenticated()" />
 		<security:intercept-url pattern="/deletetripbill" access="hasAuthority('admin')" />
